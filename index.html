@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>减脂计算器</title>
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+padding:20px;
+}
+.container{
+max-width:500px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+input,select,button{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:15px;
+}
+button{
+background:#28a745;
+color:white;
+border:none;
+border-radius:8px;
+}
+.result{
+margin-top:20px;
+padding:15px;
+background:#f0f8ff;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>减脂计算器</h2>
+
+<label>性别</label>
+<select id="gender">
+<option value="male">男</option>
+<option value="female">女</option>
+</select>
+
+<label>年龄</label>
+<input type="number" id="age">
+
+<label>身高(cm)</label>
+<input type="number" id="height">
+
+<label>体重(kg)</label>
+<input type="number" id="weight">
+
+<button onclick="calculate()">开始计算</button>
+
+<div class="result" id="result"></div>
+</div>
+
+<script>
+function calculate(){
+
+let gender=document.getElementById("gender").value;
+let age=parseFloat(document.getElementById("age").value);
+let height=parseFloat(document.getElementById("height").value);
+let weight=parseFloat(document.getElementById("weight").value);
+
+let bmi=(weight/((height/100)*(height/100))).toFixed(1);
+
+let bmr;
+
+if(gender==="male"){
+bmr=10*weight+6.25*height-5*age+5;
+}else{
+bmr=10*weight+6.25*height-5*age-161;
+}
+
+let tdee=(bmr*1.4).toFixed(0);
+let fatLoss=(tdee-500).toFixed(0);
+
+document.getElementById("result").innerHTML=
+`
+<h3>计算结果</h3>
+<p>BMI：${bmi}</p>
+<p>基础代谢(BMR)：${Math.round(bmr)} kcal</p>
+<p>每日消耗(TDEE)：${tdee} kcal</p>
+<p>建议减脂热量：${fatLoss} kcal/天</p>
+`;
+}
+</script>
+
+</body>
+</html>
